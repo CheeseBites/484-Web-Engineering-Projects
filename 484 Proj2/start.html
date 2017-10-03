@@ -1,9 +1,13 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
+
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title></title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+		  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+		  crossorigin="anonymous"></script>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
@@ -19,14 +23,13 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-
       	<h1><b>Simple Hangman</b></h1>
 
-		<p style="font-size: 22px">Word: _ _ _ _ _ _ _ _ _</p>
+		<p style="font-size: 22px" id="word">Word: _ _ _ _ _ _ _ _ _</p>
 
 		<h3>|</h3>
 	    <h3>|</h3>
-	    <h3>o</h3>
+	    <h3 	>o</h3>
 	    <h3>|</h3> 
 	    <h3>--|--</h3>
 	    <h3>/ \</h3>
@@ -35,44 +38,52 @@
 
 		<p>___________________________________________________________________________________________________________________________________
 		</p>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>A</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>B</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>C</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>D</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>E</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>F</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>G</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>H</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>I</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>J</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>K</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>L</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>M</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>N</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>O</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>P</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>Q</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>R</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>S</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>T</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>U</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>V</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>W</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>X</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>Y</b></button>
-		<button type="button" class="btn btn-secondary" style="background-color: white"><b>Z</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="A"><b>A</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="B"><b>B</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="C"><b>C</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="D"><b>D</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="E"><b>E</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="F"><b>F</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="G"><b>G</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="H"><b>H</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="I"><b>I</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="J"><b>J</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="K"><b>K</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="L"><b>L</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="M"><b>M</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="N"><b>N</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="O"><b>O</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="P"><b>P</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="Q"><b>Q</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="R"><b>R</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="S"><b>S</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="T"><b>T</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="U"><b>U</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="V"><b>V</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="W"><b>W</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="X"><b>X</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="Y"><b>Y</b></button>
+		<button type="button" class="btn btn-secondary" style="background-color: white" id="Z"><b>Z</b></button>
 		
 		<p>___________________________________________________________________________________________________________________________________
 		</p>
-		<p> <button type="button" class="btn btn-secondary start" style="background-color: white"><b>Start New Game</b></button></p>
-        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')</script>
+		<p> <button type="button" class="btn btn-secondary start" style="background-color: white" id="start"><b>Start New Game</b></button></p>
+      
 
-        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-        <script>
-            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        <script> 
+        	$(document).ready(function() {
+
+        		$("#start").click(function(){
+        			location.reload();
+        		});
+
+        		$("h3").hide();
+        		$("#word").hide();
+        		$("#A, #B, #C, #D, #E, #F, #G, #H, #I, #J, #K, #L, #M, #N, #O, #P, #Q, #R, #S, #T, #U, #V, #W, #X, #Y, #Z").click(function(){
+        			$(this).hide();
+        		});
+        	});
         </script>
-        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')</script>
     </body>
-</html>
+</html> 1
