@@ -23,21 +23,37 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+    	
       	<h1><b>Simple Hangman</b></h1>
+		<div id="my_div"><span style="font-size: 22px" id="word">Word:</span>
+		<div style="display:inline"><span style="font-size: 22px" id="letter1">_<span></div>
+		<div style="display:inline"><span style="font-size: 22px" id="letter2">_<span></div>
+		<div style="display:inline"><span style="font-size: 22px" id="letter3">_<span></div>
+		<div style="display:inline"><span style="font-size: 22px" id="letter4">_<span></div>
+		<div style="display:inline"><span style="font-size: 22px" id="letter5">_<span></div>
+		<div style="display:inline"><span style="font-size: 22px" id="letter6">_<span></div>
+		<div style="display:inline"><span style="font-size: 22px" id="letter7">_<span></div>
+		</div>
 
-		<p style="font-size: 22px" id="word">Word: _ _ _ _ _ _ _ _ _</p>
+		<div><div><h3 id="miss1">|</h3></div>
+	    <div><h3 id="miss2">|</h3></div>
+	    <div><h3 id="miss3">o</h3></div>
+	    <div><h3 id="miss4">|</h3></div> 
+	    <div><h3 id="miss5">--|--</h3></div>
+	    <div style="display:inline-block"><h3 id="miss6">/</h3> </div>
+	    <div style="display:inline-block"><h3 id="miss7">\</h3></div>
+		</div>
 
-		<h3>|</h3>
-	    <h3>|</h3>
-	    <h3 	>o</h3>
-	    <h3>|</h3> 
-	    <h3>--|--</h3>
-	    <h3>/ \</h3>
+		<div>
+		<p style="font-size: 27px">Misses:</p>
+		<div style="display:inline"><span style="font-size: 22px" id="misscount">0<span></div>
+		<div style="display:inline"><span style="font-size: 22px" >/<span></div>
+		<div style="display:inline"><span style="font-size: 22px" >7<span></div>
+		</div>
+		
+		<h3 id="lose_message"> </h3>
 
-		<p style="font-size: 27px">Misses: 0/7</p>
-
-		<p>___________________________________________________________________________________________________________________________________
-		</p>
+		<hr>
 		<button type="button" class="btn btn-secondary" style="background-color: white" id="A"><b>A</b></button>
 		<button type="button" class="btn btn-secondary" style="background-color: white" id="B"><b>B</b></button>
 		<button type="button" class="btn btn-secondary" style="background-color: white" id="C"><b>C</b></button>
@@ -64,26 +80,11 @@
 		<button type="button" class="btn btn-secondary" style="background-color: white" id="X"><b>X</b></button>
 		<button type="button" class="btn btn-secondary" style="background-color: white" id="Y"><b>Y</b></button>
 		<button type="button" class="btn btn-secondary" style="background-color: white" id="Z"><b>Z</b></button>
-		
-		<p>___________________________________________________________________________________________________________________________________
-		</p>
+		<hr>
+
 		<p> <button type="button" class="btn btn-secondary start" style="background-color: white" id="start"><b>Start New Game</b></button></p>
-      
 
-        <script> 
-        	$(document).ready(function() {
-
-        		$("#start").click(function(){
-        			location.reload();
-        		});
-
-        		$("h3").hide();
-        		$("#word").hide();
-        		$("#A, #B, #C, #D, #E, #F, #G, #H, #I, #J, #K, #L, #M, #N, #O, #P, #Q, #R, #S, #T, #U, #V, #W, #X, #Y, #Z").click(function(){
-        			$(this).hide();
-        		});
-        	});
-        </script>
+        <script src="start.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.4.min.js"><\/script>')</script>
     </body>
-</html> 1
+</html>
