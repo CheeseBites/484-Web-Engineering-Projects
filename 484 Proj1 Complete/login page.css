@@ -1,0 +1,55 @@
+
+body {
+background-image: url(src/petals.gif);
+background-repeat: no-repeat;
+background-size:100% auto;
+}
+
+.container.main{
+	margin-top: 8%
+}
+
+.nav-link.text-muted{
+	font-size: 20px;
+	font-family:cursive;
+}
+
+.nav-item.active{
+	padding:0px 35px;
+}
+
+.pill-container{
+	padding-top: 30%;
+	margin:20px;	
+}
+
+.table_container, .form-container{
+	padding-top: 5%;
+	font-size: 20px;
+	font-family: cursive;
+	text-shadow: 3px 2px pink;
+}
+
+.button.container{
+	 position: absolute;
+    right: 0px;
+    width: 500px;
+    padding: 5px;
+}
+
+.table, td, tr{
+	 border: grey solid 3px !important;
+}
+
+.badge{
+	color: white;
+	background-color: grey;
+}
+
+.send_message{
+	padding-top: 5px;
+}
+
+.nav-item{
+	font-weight:bold;
+}

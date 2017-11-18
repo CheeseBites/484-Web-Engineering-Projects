@@ -40,15 +40,7 @@ $(document).ready(function() {
         }
         if (index.length == 0) {
             misses++;
-            $("#miss" + misses).show();
-        }
-        if ($('#miss7').is(':visible')) {
-            $("#lose_message").html('You lost. The word was <b>' + word + '</b>. Select New Game to play again.');
-            $("#lose_message").show();
-        }
-
-        if (hits == word.length){
-            $("#lose_message").html('<b> You WON!. Select New Game to play again. </b>');
+            $("#miss" + misses).show(); 
             $("#lose_message").show();
         }
         $(this).css('visibility', 'hidden')

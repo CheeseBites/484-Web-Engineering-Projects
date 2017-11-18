@@ -1,0 +1,35 @@
+li{
+	float:left;
+}
+
+ul{
+	list-style-type: none;
+	overflow: hidden;
+	margin:0;
+	padding:0;
+	background-color: #333;
+}
+
+li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 40px;
+    text-decoration: none;
+    font-size: 21px;
+}
+
+h3{
+	padding: 12px 10px 10px 10px;
+	display:block;
+	vertical-align: center;
+	}
+
+.loginbtn{
+	position:absolute;
+	right:0;
+}
+
+label{
+	text-align:right;
+}
