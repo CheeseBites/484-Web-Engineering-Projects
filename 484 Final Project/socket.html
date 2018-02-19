@@ -1,0 +1,261 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+        <link rel="stylesheet" href="index.css">
+         <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js'></script>
+
+        <script type='text/javascript'>
+   var socket = io('http://localhost:3000',   {path: '/socket.io'}); // connect to server
+
+   var id;
+   var myNumber;
+   var myHand= [];
+   var myTotal= 0;
+   var oppHand= [];
+   var oppTotal= 0;
+   var dealerHand= [];
+   var dealerTotal= 0;
+   var gameOn = false;
+   var turn = 0;
+   var isbust = false;
+   var turnover= false;
+   var randoCounter = 0;
+   function hit(){
+    console.log("hit");
+      socket.emit('hit',{whosTurn: turn});
+   }
+
+   function stand(){
+    document.getElementById("my_result").innerHTML= "STAND";
+        document.getElementById("hit").disabled= true;
+        document.getElementById("stand").disabled= true;
+        turnover = true;
+    socket.emit("stand", {whoStood: turn});
+   }
+
+  function bust(){
+    if(turnover == false){
+      turnover= true;
+    socket.emit("bust", {nextTurn: turn});
+    }
+  }
+
+   socket.on('myID', function(data){
+      console.log(data.id);
+   });
+   socket.on('startGame', function(data) {
+      gameOn = data.gameStarted;
+      myNumber = data.playerNumber;
+      console.log(myNumber);
+   socket.emit('getHand', {myID: id});
+
+   //initial hand
+   socket.on('giveHand', function(data){
+      if(myNumber==0){
+        myHand.push(data.hand0[0]);
+        myHand.push(data.hand0[1]);
+        myTotal = data.hand0T;
+        oppHand.push(data.hand1[0]);
+        oppHand.push(data.hand1[1]);
+        oppTotal = data.hand1T;
+        dealerHand.push(data.handD[0]);
+        dealerHand.push(data.handD[1]);
+        dealerTotal = data.handDT;
+
+        document.getElementById('my_hand').innerHTML += myHand[0] + ", " + myHand[1];
+        document.getElementById('opp_hand').innerHTML += oppHand[0] + ", " + oppHand[1];
+        document.getElementById('dealers_hand').innerHTML += dealerHand[0];
+
+        document.getElementById('my_score').innerHTML = myTotal;
+        document.getElementById('opp_score').innerHTML = oppTotal;
+        document.getElementById("hit").disabled = false;
+        document.getElementById("stand").disabled = false;
+        if(myTotal == 21){
+          stand();
+        }
+        /*
+        if(dealerTotal>16 && dealerTotal<21){
+        document.getElementById('dealers_hand').innerHTML += ", " + dealerHand[1];
+        document.getElementById('dealers_score').innerHTML = dealerTotal;
+        }
+        else if(dealerTotal == 21){
+          document.getElementById("hit").disabled= true;
+        document.getElementById("stand").disabled= true;
+        document.getElementById("my_result").innerHTML = "Dealer Blackjack";
+        }*/
+        
+      }
+
+      else if (myNumber == 1){
+        myHand.push(data.hand1[0]);
+        myHand.push(data.hand1[1]);
+        myTotal = data.hand1T;
+        oppHand.push(data.hand0[0]);
+        oppHand.push(data.hand0[1]);
+        oppTotal = data.hand0T;
+        dealerHand.push(data.handD[0]);
+        dealerHand.push(data.handD[1]);
+        dealerTotal = data.handDT;
+          console.log(oppTotal);
+        document.getElementById('my_hand').innerHTML += myHand[0] + ", " + myHand[1];
+        document.getElementById('opp_hand').innerHTML += oppHand[0] + ", " + oppHand[1];
+        document.getElementById('dealers_hand').innerHTML += dealerHand[0];
+
+        document.getElementById('my_score').innerHTML = +myTotal;
+        document.getElementById('opp_score').innerHTML = +oppTotal;
+       /* if(dealerTotal>16 && dealerTotal<21){
+        document.getElementById('dealers_hand').innerHTML += ", " + dealerHand[1];
+        document.getElementById('dealers_score').innerHTML = dealerTotal;
+        }
+        else if(dealerTotal == 21){
+          document.getElementById("hit").disabled= true;
+        document.getElementById("stand").disabled= true;
+        document.getElementById("my_result").innerHTML = "Dealer Blackjack";
+        }*/
+      }
+
+   });
+
+   socket.on('turnChange', function(data){
+      turn = data.nextTurn;
+      if(myNumber==1 && turn ==1){
+        document.getElementById("hit").disabled= false;
+        document.getElementById("stand").disabled= false;
+        if(myTotal == 21){
+          stand();
+        }
+      }
+   });
+   
+   socket.on("hit", function(data){
+      if(myNumber == data.whoHit){
+        myHand.push(data.newCard);
+        myTotal = data.newTotal;
+        document.getElementById('my_hand').innerHTML += ", " + data.newCard;
+        document.getElementById('my_score').innerHTML = data.newTotal;
+      }
+      else if(data.whoHit==2){
+        if(randoCounter == 0){
+          randoCounter++;
+        document.getElementById("dealers_hand").innerHTML += ", "+ dealerHand[1];
+      }
+        document.getElementById("dealers_hand").innerHTML +=", " + data.newCard;
+        document.getElementById("dealers_score").innerHTML = data.newTotal;
+      }
+      else{
+        oppHand.push(data.newCard);
+        oppTotal = data.newTotal;
+        document.getElementById('opp_hand').innerHTML += ", " + data.newCard;
+        document.getElementById('opp_score').innerHTML = data.newTotal;
+      }
+      if(myTotal == 21){
+        stand();
+      }
+      else if(myTotal > 21){
+        //or bust this is where i need to start working
+        document.getElementById("hit").disabled= true;
+        document.getElementById("stand").disabled= true;
+        document.getElementById("my_result").innerHTML = "BUST!";
+        turn++;
+        console.log(turn + "here");
+        bust();
+        
+      }
+   });
+
+   socket.on("bust", function(data){
+        isbust = true;
+        turn = data.nextTurn;
+        console.log(turn);
+        if(turn == 1 && myNumber == 1){
+        document.getElementById("hit").disabled= false;
+        document.getElementById("stand").disabled= false;
+        }
+          //opponent bust
+      
+   });
+  
+  socket.on("dealerBust", function(data){
+      if(bust == false){
+          document.getElemenyById('my_result').innerHTML = "YOU WIN!";
+      }
+  });
+});
+
+
+
+</script>
+    </head>
+    <body>
+        <div class="container">
+
+              <div class="row">
+                <div class="col">
+                Opponent's Hand:
+               <b> <p id='opp_hand' class="text-justify"></p></b>
+              </div>
+
+              <div class="col">
+                 Opponents's Score:
+                <b> <p id='opp_score' class="text-justify"></p></b>
+               </div>
+
+               <div class="col">
+                  Opponents's Result:
+                 <b><p id='opp_hand' class="text-justify"></p></b>
+               </div>
+              </div>
+
+              <div class="row" style="padding-top: 50px;">
+                <div class="col">
+                Dealer's Hand:
+                <b> <p id='dealers_hand' class="text-justify"></p></b>
+               </div>
+
+               <div class="col">
+                  Dealer's Score:
+                 <b><p id='dealers_score' class="text-justify"></p></b>
+               </div>
+
+               <div class="col">
+                  Dealer's Result:
+               <b>  <p id='dealers_result' class="text-justify"></p></b>
+               </div>
+              </div>
+              
+              <div class="row">
+                <div class="col">
+                </div>
+                
+                <div class="col-6" style="top: 300px;">
+                  <p id="my_hand" style="font-size: 35px"></p>
+                    <button onclick="hit()" id="hit" disabled>Hit</button>
+                    <button onclick="stand()" id="stand" disabled>Stand</button>
+                  <h3 style="padding-top: 10px"> My Score:</h3>
+                  <p id="my_score" style="font-size: 20px"></p>
+                  <h3> Result:</h3>
+                  <p id="my_result" style="font-size: 20px"> </p>
+                </div>
+                <div class="col"> 
+
+                </div>
+              </div>
+        </div>
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+    </body>
+</html>
